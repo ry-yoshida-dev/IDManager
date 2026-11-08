@@ -1,19 +1,15 @@
 # IDManager
 
-`IDManager` is a Python class designed to manage sequential IDs. It allows you to initialize a starting ID and a step size, retrieve the next available ID, and reset the ID sequence.
+## Overview
 
-## Features
-
-- **Configurable Start and Step**: Initialize the ID sequence with a custom starting value and increment step.
-- **Sequential ID Generation**: Easily retrieve the next ID in the sequence.
-- **Reset Functionality**: Reset the ID sequence to a specified starting value.
+Issue sequential integer IDs with a configurable start and step. `IDManager` is thread-safe, so multiple threads can share one instance without issuing duplicate IDs.
 
 ## Installation
 
-You can install this package directly from GitHub:
+Requires Python 3.11+.
 
 ```bash
-pip install git+https://github.com/ry-yoshida-private/IDManager.git
+pip install git+https://github.com/ry-yoshida-dev/IDManager.git
 ```
 
 ## Usage
@@ -21,24 +17,22 @@ pip install git+https://github.com/ry-yoshida-private/IDManager.git
 ```python
 from id_manager import IDManager
 
-# Initialize IDManager with default values (start=0, step=1)
 manager = IDManager()
-print(f"Next ID: {manager.next_id}")  # Output: Next ID: 0
-print(f"Next ID: {manager.next_id}")  # Output: Next ID: 1
+manager.next_id()  # 0
+manager.next_id()  # 1
 
-# Initialize with custom start and step
-custom_manager = IDManager(start=10, step=5)
-print(f"Next ID: {custom_manager.next_id}")  # Output: Next ID: 10
-print(f"Next ID: {custom_manager.next_id}")  # Output: Next ID: 15
+manager = IDManager(current_id=10, step=5)
+manager.next_id()  # 10
+manager.next_id()  # 15
 
-# Reset the manager
 manager.reset(start=100)
-print(f"Next ID after reset: {manager.next_id}")  # Output: Next ID after reset: 100
+manager.next_id()  # 100
 ```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
+
 This package includes code derived from UniversalTracker, developed by RIIPS (Research Institute for Infrastructure Paradigm Shift), an in-house laboratory of Yachiyo Engineering Co., Ltd.
