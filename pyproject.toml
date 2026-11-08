@@ -1,22 +1,31 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "id-manager"
 version = "0.2.0"
-authors = [
-  { name="Ryuto Yoshida"},
-]
-description = "A simple ID management library"
+description = "Thread-safe sequential integer ID generator."
 readme = "README.md"
-requires-python = ">=3.7"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [
+    { name = "Ryuto Yoshida" }
+]
 classifiers = [
-    "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Operating System :: OS Independent",
     "Typing :: Typed",
 ]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/ry-yoshida-dev/IDManager"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -24,10 +33,41 @@ where = ["src"]
 [tool.setuptools.package-data]
 id_manager = ["py.typed"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.mypy]
+mypy_path = "src"
+files = ["src", "tests"]
+explicit_package_bases = true
+strict = true
+
 [tool.pyright]
 include = ["src", "tests"]
 extraPaths = ["src"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]
+[dependency-groups]
+dev = [
+    "basedpyright>=1.40.2",
+    "mypy>=2.4.1",
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.uv]
+exclude-newer = "7 days"
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "D"]
+# Only public classes, methods, and functions need docstrings, and multi-line ones are the local style.
+ignore = ["E501", "D100", "D104", "D105", "D200"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
